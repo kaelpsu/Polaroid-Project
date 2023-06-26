@@ -4,7 +4,7 @@ INCLUDES = -I.
 LIBS = -lm
 
 PROG_NAME = polaroid
-SRCS = main.cpp font.cpp glyph.cpp
+SRCS = main.cpp font.cpp glyph.cpp image.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(PROG_NAME)
