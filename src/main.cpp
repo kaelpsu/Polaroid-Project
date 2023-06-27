@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stdio.h>
+#include <getopt.h>
 using namespace std;
 
 /**
@@ -18,26 +20,86 @@ void print_usage(string program_name) {
   cerr << endl;
 }
 
+void printInfo(string op, string dp, string fp, int bw, int sw) {
+  cout << "caminho da imagem: " << op << endl;
+  cout << "destino da imagem: " << dp << endl;
+  cout << "caminho da fonte: " << fp << endl;
+  cout << "tamanho da borda: " << bw << endl;
+  cout << "tamanho da base: " << sw << endl;
+
+}
+
 /**
  * Função principal: ponto de partida do programa.
  */
-int main(int argc, char const *argv[]) {
+int main(int argc, char *argv[]) {
+  if (argc < 2) {
+    // se não houver pelo menos 1 argumento, então o programa está sendo usado incorretamente.
+    // deve-se portanto imprimir como usá-lo.
+    print_usage(argv[0]);
+  }
+  
   string originPath;
-  string destinyPath;
-  string fontPath;
-  int border;
-  int space;
+  string destinyPath = "default/save/path/";
+  string fontPath = "default/font/path/";
+  int border = 100;
+  int space = 300;
 
-  /*
-    argc e argv são parâmetros padrões na função main(). Enquanto argc indica quantos
-    argumentos foram passados para o programa, argv contém esses argumentos na ordem
-    em que eles foram passados. argc será sempre >= 1, pois argv[0] terá o nome do programa.
-    Por exemplo, se um programa com `meu_prog` for chamado assim:
-    $ ./meu_prog abc def ghi
-    argc terá o valor 4, indicando que há 4 argumentos, sendo o 1º (argv[0]) o nome do
-    próprio programa ("./meu_prog"), o 2º (argv[1]) será "abc", o 3º (argv[2]) será "def"
-    e, por fim, o 4º (argv[3]) será "ghi."
-  */
+  int option;
+  
+  while ((option = getopt(argc, argv, "hi:o:f:b:s:")) != -1) {
+    switch (option)
+    {
+    case 'h':
+      print_usage(argv[0]);
+      break;
+    case 'i':
+      originPath = optarg;
+      break;
+    case 'o':
+      destinyPath = optarg;
+      break;
+    case 'f':
+      fontPath = optarg;
+      break;
+    case 'b':
+      border = atof(optarg);
+      break;
+    case 's':
+      space = atof(optarg);
+      break;
+      
+    // case ':':
+    //   switch (optopt)
+    //   {
+    //   case 'o':
+    //     oResult("default/path");
+    //     break;
+    //   case 'f':
+    //     fResult("default/path");
+    //     break;
+    //   case 'b':
+    //     bResult(100);
+    //     break;
+    //   case 's':
+    //     sResult(300);
+    //     break;
+    //   default:
+    //     break;
+    //   }
+    //   break;
+
+    default:
+      break;
+    }
+  }
+
+  if (originPath == "") {
+       cout << "Please, enter the image path." << endl;
+       return 1;
+  }
+
+  printInfo(originPath, destinyPath, fontPath, border, space);
 
   // TO DO
   // 1) ler a imagem input_file
@@ -46,63 +108,6 @@ int main(int argc, char const *argv[]) {
   // 3) ler a fonte font_name
   // 4) inserir o texto msg na imagem usando a fonte lida
   // 5) salvar a imagem resultante em output_file
-
-  if (argc == 1) {
-    // se não houver pelo menos 1 argumento, então o programa está sendo usado incorretamente.
-    // deve-se portanto imprimir como usá-lo.
-    print_usage(argv[0]);
-  } else if (argc > 1) {
-
-    for (int i = 1; i < argc; i++) {
-      if (argv[i] == "-h") {
-        print_usage(argv[0]);
-      } else if (argv[i] == "-i") {
-
-      } else if (argv[i] == "-o") {
-        
-      } else if (argv[i] == "-f") {
-        
-      } else if (argv[i] == "-b") {
-        
-      } else if (argv[i] == "-s") {
-        
-      }
-
-    }
-
-  }
-
-    string operation = argv[1]; // transforma o array de caracteres em string.
-
-    // Declara as variaveis que irão receber os primeiros valores do arquivo ppm
-    string identifier;
-    int columns = 0, lines = 0, maxRGBVal;
-
-    // Passa o valor da entrada padrão para suas respectivas variáveis correspondentes
-    cin >> identifier >> columns >> lines >> maxRGBVal;
-
-    // Com base no argumento obtido na entrada padrão, sua função correspondente é chamada, 
-    // com os valores iniciais do arquivo ppm sendo passados como argumentos.
-
-    // if (operation == "gray") {
-    //   grayScale(identifier, columns, lines, maxRGBVal);
-
-    // } else if (operation == "enlarge") {
-    //   enlarge(identifier, columns, lines, maxRGBVal);
-
-    // } else if (operation == "reduce") {
-    //   reduce(identifier, columns, lines, maxRGBVal);
-      
-    // } else if (operation == "rotate") {
-    //   rotate(identifier, columns, lines, maxRGBVal);
-      
-    // } else if (operation == "sharp") {
-    //   sharp(identifier, columns, lines, maxRGBVal);
-      
-    // } else if (operation == "blur") {
-    //   blur(identifier, columns, lines, maxRGBVal);
-      
-    // } 
 
   return 0;
 }
