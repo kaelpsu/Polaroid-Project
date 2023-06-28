@@ -1,6 +1,8 @@
 #ifndef __IMAGE_H__
 #define __IMAGE_H__
 
+#include "pixel.h"
+
 using namespace std;
 
 /**
@@ -8,6 +10,19 @@ using namespace std;
  */
 
 class Image {
+    int width;
+    int height;
+    Pixel *pixels[];
+
+public:
+
+    Image(int w, int h, Pixel *data);
+    ~Image();
+
+    int getWidth();
+    int getHeight();
+    Pixel** getData();
+
 
 };
 
