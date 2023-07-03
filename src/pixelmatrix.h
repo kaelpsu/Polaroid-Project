@@ -1,6 +1,7 @@
 #ifndef __PIXELMATRIX_H__
 #define __PIXELMATRIX_H__
 
+#include <iostream>
 #include "pixel.h"
 
 using namespace std;
@@ -12,24 +13,27 @@ using namespace std;
 class PixelMatrix {
     int lines;
     int columns;
+    int size;
+    int length;
+    int filledLines;
+    int filledColumns;
     Pixel **data;
 
-
-
 public:
-
     PixelMatrix();
 
-    PixelMatrix(int l, int c) {
-        lines = l;
-        columns = c;
-        data = new Pixel*[lines];
+    PixelMatrix(int l, int c);
 
-        for (int i = 0; i < lines; i++) {
-            data[i] = new Pixel[columns];
-        }
+    ~PixelMatrix();
 
-    }
+    void add(Pixel p);
+    void copy(PixelMatrix *pm);
+
+    Pixel** getData();
+    int getLength();
+    int getSize();
+    int getLines();
+    int getColumns();
 
 
 };
