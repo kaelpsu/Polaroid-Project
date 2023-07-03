@@ -2,6 +2,7 @@
 #define __IMAGE_H__
 
 #include "pixel.h"
+#include "pixelmatrix.h"
 
 using namespace std;
 
@@ -10,18 +11,21 @@ using namespace std;
  */
 
 class Image {
+    string type;
     int width;
     int height;
-    Pixel *pixels[];
+    int maxRGBVal;
+    PixelMatrix pixels;
 
 public:
 
-    Image(int w, int h, Pixel *data);
-    ~Image();
+    Image(string t, int w, int h, int mx, PixelMatrix* data);
 
+    string getType();
     int getWidth();
     int getHeight();
-    Pixel** getData();
+    int getMaxRGB();
+    void print(string destiny);
 
 
 };
