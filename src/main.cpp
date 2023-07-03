@@ -1,6 +1,11 @@
 #include <iostream>
 #include <stdio.h>
 #include <getopt.h>
+#include <fstream>
+#include "pixel.cpp" // ALTERAAAAAAAAAAAAAAAR
+#include "pixelmatrix.cpp" // ALTERAAAAAAAAAAAAAAAR
+#include "image.cpp" // ALTERAAAAAAAAAAAAAAAR
+
 using namespace std;
 
 /**
@@ -29,10 +34,95 @@ void printInfo(string op, string dp, string fp, int bw, int sw) {
 
 }
 
+Image readImage(string originPath) {
+  string type;
+  int lines, columns, maxRGBVal;
+  char charVal;
+
+  ifstream ppm(originPath);
+
+  ppm >> type >> lines >> columns >> maxRGBVal;
+
+  PixelMatrix data(lines, columns);
+
+  if (type == "P3") {
+
+    for (int l = 0; l < lines; l++) { // Para cada linha faça:
+      for (int c = 0; c < columns; c++) { // Para cada coluna faça:
+        unsigned char red;
+        unsigned char green;
+        unsigned char blue;
+
+        for (int p = 0; p < 3; p++) { // Para cada valor RGB no pixel faça:
+          int rgb;
+          ppm >> rgb; // Recebe o valor de R, G ou B da entrada padrão.
+          switch (p)
+          {
+          case 0:
+            red = rgb;
+            break;
+          case 1:
+            green = rgb;
+            break;
+          case 2:
+            blue = rgb;
+            break;
+          default:
+            break;
+          }
+        }
+
+        Pixel px(red, green, blue);
+        
+        data.add(px);
+      }
+    }
+  } else if (type == "P6") {
+
+    for (int l = 0; l < lines; l++) { // Para cada linha faça:
+      for (int c = 0; c < columns; c++) { // Para cada coluna faça:
+        char red;
+        char green;
+        char blue;
+
+        for (int p = 0; p < 3; p++) { // Para cada valor RGB no pixel faça:
+          switch (p)
+          {
+          case 0:
+            ppm.get(red);
+            break;
+          case 1:
+            ppm.get(green);
+            break;
+          case 2:
+            ppm.get(blue);
+            break;
+          default:
+            break;
+          }
+        }
+
+        Pixel px((unsigned char)red, (unsigned char)green, (unsigned char)blue);
+        
+        data.add(px);
+      }
+    }
+    
+  }
+
+  ppm.close();
+
+  Image image(type, columns, lines, maxRGBVal, &data);
+
+  return image;
+
+}
+
 /**
  * Função principal: ponto de partida do programa.
  */
 int main(int argc, char *argv[]) {
+
   if (argc < 2) {
     // se não houver pelo menos 1 argumento, então o programa está sendo usado incorretamente.
     // deve-se portanto imprimir como usá-lo.
@@ -99,7 +189,11 @@ int main(int argc, char *argv[]) {
        return 1;
   }
 
-  printInfo(originPath, destinyPath, fontPath, border, space);
+  Image original = readImage(originPath);
+
+  original.print(destinyPath);
+
+  // printInfo(originPath, destinyPath, fontPath, border, space);
 
   // TO DO
   // 1) ler a imagem input_file
