@@ -28,6 +28,7 @@ public:
 
     void add(Pixel p);
     void copy(PixelMatrix *pm);
+    void transfer(PixelMatrix* pm, int border, int space);
 
     Pixel** getData();
     int getLength();

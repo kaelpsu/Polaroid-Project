@@ -119,6 +119,44 @@ void PixelMatrix::copy(PixelMatrix *pm) {
     }
 }
 
+void PixelMatrix::transfer(PixelMatrix* pm, int border, int space) {
+    // Clona a matriz
+    for (int l = 0; l < lines; l++) {
+        for (int c = 0; c < columns; c++) {
+            if (border == 0 && space == 0) {
+                Pixel newPx = (*pm).getData()[l][c];
+                data[l][c] = newPx;
+            } else {
+                if (border != 0 && space != 0) {
+                    if((c > border - 1 || c < columns - border) && l < lines - space) {
+                        Pixel newPx = (*pm).getData()[l][c];
+                        data[l][c] = newPx;
+                    } else {
+                        Pixel newPx(255, 255, 255);
+                        data[l][c] = newPx;
+                    }
+                } else if (border != 0 && space == 0) {
+                    if(c > border - 1 || c < columns - border) {
+                        Pixel newPx = (*pm).getData()[l][c];
+                        data[l][c] = newPx;
+                    } else {
+                        Pixel newPx(255, 255, 255);
+                        data[l][c] = newPx;
+                    }
+                } else if (border == 0 && space != 0) {
+                    if(l < lines - space) {
+                        Pixel newPx = (*pm).getData()[l][c];
+                        data[l][c] = newPx;
+                    } else {
+                        Pixel newPx(255, 255, 255);
+                        data[l][c] = newPx;
+                    }
+                }
+            }
+        }
+    }
+}
+
 Pixel** PixelMatrix::getData() { return data; }
 int PixelMatrix::getLength() { return length; }
 int PixelMatrix::getSize() { return size; }
