@@ -24,11 +24,22 @@ int Image::getMaxRGB() {
     return maxRGBVal;
 }
 
+void Image::polaroid(int border, int space) {
+    width = width + (2*border);
+    height = height + space + border;
+
+    PixelMatrix polaroidPixels(height, width);
+    polaroidPixels.transfer(&pixels, border, space);
+
+    pixels.copy(&polaroidPixels);
+
+}
+
 void Image::print(string destiny) {
     ofstream file(destiny);
     file << type << endl;
-    file << height << " " << width << endl;
-    file << maxRGBVal;
+    file << width << " " << height << endl;
+    file << maxRGBVal << endl;
 
     // PRINT P6
     if (type == "P6") {
@@ -39,7 +50,6 @@ void Image::print(string destiny) {
             }
         }
     } else if(type == "P3") {
-        file << endl;
         // PRINT P3
         for (int l = 0; l < height; l++) {
             for (int c = 0; c < width; c++) {

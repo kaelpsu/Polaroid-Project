@@ -26,6 +26,7 @@ public:
     int getHeight();
     int getMaxRGB();
     void print(string destiny);
+    void polaroid(int border, int space);
 
 
 };

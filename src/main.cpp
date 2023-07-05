@@ -41,7 +41,7 @@ Image readImage(string originPath) {
 
   ifstream ppm(originPath);
 
-  ppm >> type >> lines >> columns >> maxRGBVal;
+  ppm >> type >> columns >> lines >> maxRGBVal;
 
   PixelMatrix data(lines, columns);
 
@@ -132,8 +132,8 @@ int main(int argc, char *argv[]) {
   string originPath;
   string destinyPath = "default/save/path/";
   string fontPath = "default/font/path/";
-  int border = 100;
-  int space = 300;
+  int border = 60;
+  int space = 120;
 
   int option;
   
@@ -191,7 +191,9 @@ int main(int argc, char *argv[]) {
 
   Image original = readImage(originPath);
 
-  original.print(destinyPath);
+  original.polaroid(border, space);
+
+  // original.print(destinyPath);
 
   // printInfo(originPath, destinyPath, fontPath, border, space);
 
