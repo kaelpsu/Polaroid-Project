@@ -127,11 +127,10 @@ void PixelMatrix::transfer(PixelMatrix* pm, int border, int space) {
         }
     }
 
-    for (int l = border; l < (*pm).getLines() + border; l++) {
+    for (int l = border; l < lines - space; l++) {
         for (int c = border; c < columns - border; c++) {
             Pixel newPx = (*pm).getData()[l - border][c - border];
             data[l][c] = newPx;
-
         }
     }
 

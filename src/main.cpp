@@ -87,6 +87,10 @@ Image readImage(string originPath) {
         char green;
         char blue;
 
+        if (l == 0 && c == 0) {
+          ppm.ignore();
+        }
+
         for (int p = 0; p < 3; p++) { // Para cada valor RGB no pixel faça:
           switch (p)
           {
@@ -195,12 +199,12 @@ int main(int argc, char *argv[]) {
 
   original.polaroid(border, space);
 
-  Font f;
-  f.read_bdf(fontPath);
+  // Font f;
+  // f.read_bdf(fontPath);
 
-  const Glyph *a = f.get_glyph('a');
+  // const Glyph *a = f.get_glyph('a');
 
-  cout << a->get_width() << " " << a->get_height() << endl;
+  // cout << a->get_width() << " " << a->get_height() << endl;
 
   // original.writeLetter(a);
 
