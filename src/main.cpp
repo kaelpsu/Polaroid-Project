@@ -2,11 +2,11 @@
 #include <stdio.h>
 #include <getopt.h>
 #include <fstream>
-#include "pixel.cpp" // ALTERAAAAAAAAAAAAAAAR
-#include "pixelmatrix.cpp" // ALTERAAAAAAAAAAAAAAAR
-#include "image.cpp" // ALTERAAAAAAAAAAAAAAAR
-#include "glyph.cpp" // ALTERAAAAAAAAAAAAAAAR
-#include "font.cpp" // ALTERAAAAAAAAAAAAAAAR
+#include "pixel.h"
+#include "pixelmatrix.h"
+#include "image.h"
+#include "glyph.h"
+#include "font.h"
 
 using namespace std;
 
