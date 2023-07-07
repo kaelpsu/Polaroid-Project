@@ -67,3 +67,19 @@ void Image::print(string destiny) {
     
 
 }
+
+void Image::writeLetter(const Glyph *letter) {
+    // for (int l = 0; l < letter->get_height(); l++) {
+    //     for (int c = 0; c < letter->get_width(); c++) {
+    //         // if (letter->get_bit(c, l)) {
+    //         //     Pixel p(0, 0, 0);
+    //         //     pixels.getData()[l][c] = p;
+    //         // }
+    //     }
+    // }
+
+}
+
+void Image::writeMessage() {
+    
+}

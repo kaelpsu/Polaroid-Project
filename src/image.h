@@ -3,6 +3,7 @@
 
 #include "pixel.h"
 #include "pixelmatrix.h"
+#include "glyph.h"
 
 using namespace std;
 
@@ -27,6 +28,8 @@ public:
     int getMaxRGB();
     void print(string destiny);
     void polaroid(int border, int space);
+    void writeLetter(const Glyph *letter);
+    void writeMessage();
 
 
 };

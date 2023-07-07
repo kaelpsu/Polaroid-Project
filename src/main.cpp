@@ -5,6 +5,8 @@
 #include "pixel.cpp" // ALTERAAAAAAAAAAAAAAAR
 #include "pixelmatrix.cpp" // ALTERAAAAAAAAAAAAAAAR
 #include "image.cpp" // ALTERAAAAAAAAAAAAAAAR
+#include "glyph.cpp" // ALTERAAAAAAAAAAAAAAAR
+#include "font.cpp" // ALTERAAAAAAAAAAAAAAAR
 
 using namespace std;
 
@@ -131,7 +133,7 @@ int main(int argc, char *argv[]) {
   
   string originPath;
   string destinyPath = "default/save/path/";
-  string fontPath = "default/font/path/";
+  string fontPath = "../fonts/a.bdf";
   int border = 60;
   int space = 120;
 
@@ -193,7 +195,16 @@ int main(int argc, char *argv[]) {
 
   original.polaroid(border, space);
 
-  // original.print(destinyPath);
+  Font f;
+  f.read_bdf(fontPath);
+
+  const Glyph *a = f.get_glyph('a');
+
+  cout << a->get_width() << " " << a->get_height() << endl;
+
+  // original.writeLetter(a);
+
+  original.print(destinyPath);
 
   // printInfo(originPath, destinyPath, fontPath, border, space);
 
