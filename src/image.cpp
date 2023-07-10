@@ -68,18 +68,27 @@ void Image::print(string destiny) {
 
 }
 
-void Image::writeLetter(const Glyph *letter) {
-    // for (int l = 0; l < letter->get_height(); l++) {
-    //     for (int c = 0; c < letter->get_width(); c++) {
-    //         // if (letter->get_bit(c, l)) {
-    //         //     Pixel p(0, 0, 0);
-    //         //     pixels.getData()[l][c] = p;
-    //         // }
-    //     }
-    // }
-
+void Image::writeLetter(const Glyph *letter, int x, int y) {
+    for (int l = 0; l < letter->get_height(); l++) {
+        for (int c = 0; c < letter->get_width(); c++) {
+            if (letter->get_bit(c, l)) {
+                Pixel p(0, 0, 0);
+                pixels.getData()[l + y][c + x] = p;
+            }
+        }
+    }
 }
 
-void Image::writeMessage() {
+void Image::writeMessage(string message, Font *f) {
+    int x = width*2/100;
+    int y = height*90/100;
+
+    for(char& c : message) {
+        const Glyph *current = (*f).get_glyph(c);
+        // cout << c << ": " << "offsetX: " << current->get_x_offset() << " | width: " << current->get_width() << " | deviceX: " << current->get_device_width_x() << endl;
+        writeLetter(current, x, y);
+
+        x += current->get_device_width_x();
+    }
     
 }

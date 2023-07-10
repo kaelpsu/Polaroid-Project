@@ -195,18 +195,19 @@ int main(int argc, char *argv[]) {
        return 1;
   }
 
-  Image original = readImage(originPath);
+  string message;
+
+  cout << "Escreva a mensagem a ser apresentada na imagem:" << endl;
+  cin >> message;
+
+  Image original = readImage(originPath, iceCream);
 
   original.polaroid(border, space);
 
-  // Font f;
-  // f.read_bdf(fontPath);
+  Font f;
+  f.read_bdf("../fonts/ib16x16u.bdf");
 
-  // const Glyph *a = f.get_glyph('a');
-
-  // cout << a->get_width() << " " << a->get_height() << endl;
-
-  // original.writeLetter(a);
+  original.writeMessage(message, &f);
 
   original.print(destinyPath);
 
