@@ -36,7 +36,7 @@ void printInfo(string op, string dp, string fp, int bw, int sw) {
 
 }
 
-Image readImage(string originPath) {
+Image readImage(string originPath, bool iceCream) {
   string type;
   int lines, columns, maxRGBVal;
   char charVal;
@@ -56,6 +56,10 @@ Image readImage(string originPath) {
         unsigned char blue;
 
         for (int p = 0; p < 3; p++) { // Para cada valor RGB no pixel faça:
+          if (l == 0 && c == 0 && iceCream) {
+            red = 0;
+            p++;
+          }
           int rgb;
           ppm >> rgb; // Recebe o valor de R, G ou B da entrada padrão.
           switch (p)
@@ -87,7 +91,7 @@ Image readImage(string originPath) {
         char green;
         char blue;
 
-        if (l == 0 && c == 0) {
+        if (l == 0 && c == 0 && !iceCream) {
           ppm.ignore();
         }
 
@@ -136,14 +140,15 @@ int main(int argc, char *argv[]) {
   }
   
   string originPath;
-  string destinyPath = "default/save/path/";
+  string destinyPath = "../output_file.ppm";
   string fontPath = "../fonts/a.bdf";
   int border = 60;
   int space = 120;
+  bool iceCream = false;
 
   int option;
   
-  while ((option = getopt(argc, argv, "hi:o:f:b:s:")) != -1) {
+  while ((option = getopt(argc, argv, "hi:o:f:b:s:p")) != -1) {
     switch (option)
     {
     case 'h':
@@ -164,27 +169,9 @@ int main(int argc, char *argv[]) {
     case 's':
       space = atof(optarg);
       break;
-      
-    // case ':':
-    //   switch (optopt)
-    //   {
-    //   case 'o':
-    //     oResult("default/path");
-    //     break;
-    //   case 'f':
-    //     fResult("default/path");
-    //     break;
-    //   case 'b':
-    //     bResult(100);
-    //     break;
-    //   case 's':
-    //     sResult(300);
-    //     break;
-    //   default:
-    //     break;
-    //   }
-    //   break;
-
+    case 'p':
+      iceCream = true;
+      break;
     default:
       break;
     }
@@ -210,16 +197,6 @@ int main(int argc, char *argv[]) {
   original.writeMessage(message, &f);
 
   original.print(destinyPath);
-
-  // printInfo(originPath, destinyPath, fontPath, border, space);
-
-  // TO DO
-  // 1) ler a imagem input_file
-  // 2) alterar a imagem lida inserindo o efeito polaroid usando
-  //    como border como tamanho da borda e space como espaço de texto.
-  // 3) ler a fonte font_name
-  // 4) inserir o texto msg na imagem usando a fonte lida
-  // 5) salvar a imagem resultante em output_file
 
   return 0;
 }
