@@ -41,8 +41,8 @@ void Image::print(string destiny) {
     file << width << " " << height << endl;
     file << maxRGBVal << endl;
 
-    // PRINT P6
     if (type == "P6") {
+    // PRINT P6
         for (int l = 0; l < height; l++) {
             for (int c = 0; c < width; c++) {
                 Pixel p = pixels.getData()[l][c];
@@ -50,7 +50,7 @@ void Image::print(string destiny) {
             }
         }
     } else if(type == "P3") {
-        // PRINT P3
+    // PRINT P3
         for (int l = 0; l < height; l++) {
             for (int c = 0; c < width; c++) {
                 Pixel p = pixels.getData()[l][c];
@@ -62,9 +62,6 @@ void Image::print(string destiny) {
             }
         }
     }
-
-
-    
 
 }
 
@@ -85,7 +82,6 @@ void Image::writeMessage(string message, Font *f) {
 
     for(char& c : message) {
         const Glyph *current = (*f).get_glyph(c);
-        // cout << c << ": " << "offsetX: " << current->get_x_offset() << " | width: " << current->get_width() << " | deviceX: " << current->get_device_width_x() << endl;
         writeLetter(current, x, y);
 
         x += current->get_device_width_x();
