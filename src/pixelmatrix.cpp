@@ -37,6 +37,7 @@ PixelMatrix::~PixelMatrix() {
 }
 
 void PixelMatrix::add(Pixel p) {
+    // Se a matriz atingir a capacidade máxima,
     if (length == size) {
         // Declara novos tamanhos para s linhas e colunas da matriz
         int newLines = 2*lines;
@@ -85,30 +86,26 @@ void PixelMatrix::add(Pixel p) {
 
 void PixelMatrix::copy(PixelMatrix *pm) {
     if ((*pm).getLines() != lines || (*pm).getColumns() != columns) {
-        // Declara novos tamanhos para s linhas e colunas da matriz
         int newLines = (*pm).getLines();
         int newColumns = (*pm).getColumns();
 
-        // Inicializa um ponteiro com dimensões maiores do que o original, para substituí-lo
         Pixel **newData = new Pixel*[newLines];
         for (int i = 0; i < newLines; i++) {
             newData[i] = new Pixel[newColumns];
         }
 
-        // Libera a memória ocupada pela matriz original
         for (int i = 0; i < lines; i++) {
             delete[] data[i];
         }
         delete[] data;
 
-        // Aponta o ponteiro original para a nova matriz, e incrementa o valor da variavel tamanho
         data = newData;
         size = newLines * newColumns;
         lines = newLines;
         columns = newColumns;
     }
 
-    // Clona a matriz
+    // Clona o conteúdo da matriz
     for (int l = 0; l < lines; l++) {
         for (int c = 0; c < columns; c++) {
             Pixel newPx = (*pm).getData()[l][c];
@@ -118,7 +115,6 @@ void PixelMatrix::copy(PixelMatrix *pm) {
 }
 
 void PixelMatrix::transfer(PixelMatrix* pm, int border, int space) {
-    // Transfere
 
     for (int l = 0; l < lines; l++) {
         for (int c = 0; c < columns; c++) {
